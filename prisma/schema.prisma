@@ -20,3 +20,12 @@ model Post {
 
     @@index([name])
 }
+
+model Board{
+    id Int @id @default(autoincrement())
+    chipName String
+    entry String
+    date String
+    img String?
+    rating Int
+}
