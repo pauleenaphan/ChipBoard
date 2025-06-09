@@ -23,11 +23,9 @@ const AllChipBoards = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
 
-        try{
-            const status = await createBoard(formData.chipName, formData.entry, formData.rating);
-            if(status == true){ setFormData({ chipName: "", entry: "", rating: "" }); }
-        }catch(error){
-            console.error("Error creating new Board", error);
+        const status = await createBoard(formData.chipName, formData.entry, formData.rating);
+        if(status == true){ 
+            setFormData({ chipName: "", entry: "", rating: "" }); 
         }
     }
 

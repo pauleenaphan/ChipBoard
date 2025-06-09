@@ -21,11 +21,12 @@ export const boardRouter = createTRPCRouter({
     }),
 
     // gets single chip board 
-    getBoard: publicProcedure.query(async ({ ctx, input }) =>{
-        const board = await ctx.db.board.findUnique({
+    getBoard: publicProcedure
+    .input(z.number())
+    .query(async ({ ctx, input }) => {
+            const board = await ctx.db.board.findUnique({
             where: { id: input }
-        })
-
+        });
         return board ?? null;
     }),
         
@@ -42,7 +43,7 @@ export const boardRouter = createTRPCRouter({
         id: z.number(),
         chipName: z.string().min(1),
         entry: z.string().min(1),
-        rating: z.number().min(1).max(5)
+        rating: z.number().min(1).max(10)
     }))
     .mutation(async ({ ctx, input }) =>{
         return ctx.db.board.update({
