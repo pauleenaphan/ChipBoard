@@ -3,10 +3,12 @@
 
 import { api } from "~/trpc/react";
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 
 import { useCreateBoard } from "../utils/boardAPI";
 
 const AllChipBoards = () => {
+    const router = useRouter();
     const { createBoard } = useCreateBoard();
     const { data: allBoards, isLoading } = api.board.getAllBoards.useQuery();
 
@@ -32,6 +34,13 @@ const AllChipBoards = () => {
     return(
         <div>
             <div> all chips boards here </div>
+            {!isLoading && allBoards?.map((board) => (
+                <div key={board.id}
+                    onClick={() =>{ router.push(`/chipBoard/${board.id}`)}}>
+                    {board.chipName}
+                    <p> board_Id: {board.id} </p>
+                </div>
+            ))}
             <form onSubmit={ handleSubmit }>
                 <div> new board </div>
                 <label> Name:  </label>
@@ -62,7 +71,6 @@ const AllChipBoards = () => {
                 <button type="submit"> Add Board </button>
             </form>
         </div>
-        
     )
 }
 
