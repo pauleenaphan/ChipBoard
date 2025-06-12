@@ -7,10 +7,13 @@
  * need to use are documented accordingly near the end.
  */
 import { initTRPC } from "@trpc/server";
+import { TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
+import { createPagesServerClient } from '@supabase/auth-helpers-nextjs';
+import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 /**
  * 1. CONTEXT
@@ -24,10 +27,17 @@ import { db } from "~/server/db";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+
+export const createTRPCContext = async ({ req, res }: CreateNextContextOptions) => {
+  const supabase = createPagesServerClient({ req, res });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return {
     db,
-    ...opts,
+    user,
   };
 };
 
@@ -104,3 +114,17 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
  * are logged in.
  */
 export const publicProcedure = t.procedure.use(timingMiddleware);
+
+/* Used for protected procedures */
+export const protectedProcedure = t.procedure.use(async ({ ctx, next }) => {
+  if (!ctx.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  // You can attach more session info to ctx here if needed
+  return next({
+    ctx: {
+      user: ctx.user,
+    },
+  });
+});

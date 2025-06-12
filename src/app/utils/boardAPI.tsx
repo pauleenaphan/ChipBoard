@@ -1,26 +1,26 @@
 import { getFormattedToday } from "../utils/helper";
 import { api } from "~/trpc/react";
+import { getTrpcClient } from "~/server/utils/supabaseClient";
 
 export const useCreateBoard = () => {
-    const { mutateAsync: addBoardMutation, error } = api.board.addBoard.useMutation();
-
     const createBoard = async (chipName: string, entry: string, rating: string) => {
         try{
-            await addBoardMutation({
+            const client = await getTrpcClient();
+            await client.board.addBoard.mutate({
                 chipName,
                 entry,
                 date: getFormattedToday(),
                 rating: Number(rating),
             });
-            alert("board has been created");
-            return true;
+                alert("board has been created");
+                return true;
         }catch(error){
             console.error("Error creating new board", error);
             return false;
         }
     };
 
-    return { createBoard, error };
+    return { createBoard };
 };
 
 export const useEditBoard = () =>{

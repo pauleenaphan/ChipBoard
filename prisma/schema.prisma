@@ -1,6 +1,11 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+/*
+    After making changes to this file, run:
+    npx prisma migrate dev --name your_migration_name
+*/
+
 generator client {
     provider = "prisma-client-js"
 }
@@ -10,6 +15,14 @@ datasource db {
     url      = env("DATABASE_URL")
     directUrl = env("DIRECT_URL")
     relationMode = "prisma"
+}
+
+model User {
+    id String @id
+    createdAt DateTime @default(now())
+    email String @unique
+    name String @unique
+    board Board[]
 }
 
 model Post {
@@ -28,4 +41,8 @@ model Board{
     date String
     img String?
     rating Int
+    userId String
+    user User @relation(fields: [userId], references: [id])
+
+    @@index([userId])
 }

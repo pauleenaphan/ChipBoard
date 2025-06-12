@@ -11,8 +11,8 @@ export const Navbar = () =>{
                 <Link href="/chipBoard"> Board </Link>
             </div>
             <div>
-                <Link href="/login"> Login </Link>
-                <Link href="/signUp"> Sign Up </Link>
+                <Link href="/auth/login"> Login </Link>
+                <Link href="/auth/signup"> Sign Up </Link>
             </div>
         </nav>
     )

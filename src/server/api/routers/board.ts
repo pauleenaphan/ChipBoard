@@ -1,10 +1,10 @@
 import z from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure, protectedProcedure } from "~/server/api/trpc";
 
 export const boardRouter = createTRPCRouter({
     // creates new chipboard 
-    addBoard: publicProcedure
+    addBoard: protectedProcedure
     .input(z.object({
         chipName: z.string().min(1),
         entry: z.string().min(1),
@@ -13,15 +13,19 @@ export const boardRouter = createTRPCRouter({
         rating: z.number().min(1).max(10)
     }))
     .mutation(async({ ctx, input }) =>{
+        if (!ctx.user) {
+            throw new Error("Not authenticated");
+        }
         return ctx.db.board.create({
             data: {
-                ...input
+                ...input,
+                userId: ctx.user.id
             }
         })
     }),
 
     // gets single chip board 
-    getBoard: publicProcedure
+    getBoard: protectedProcedure
     .input(z.number())
     .query(async ({ ctx, input }) => {
             const board = await ctx.db.board.findUnique({
@@ -31,8 +35,14 @@ export const boardRouter = createTRPCRouter({
     }),
         
     // get all boards 
-    getAllBoards: publicProcedure.query(async ({ ctx }) =>{
-        const allBoards = await ctx.db.board.findMany();
+    getAllBoards: protectedProcedure.query(async ({ ctx }) =>{
+        if(!ctx.user){
+            console.log("User is not logged in");
+            throw new Error("User is not logged in");
+        }
+        const allBoards = await ctx.db.board.findMany({
+            where: { userId: ctx.user.id }
+        });
 
         return allBoards;
     }),

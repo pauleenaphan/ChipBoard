@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 
 import { useCreateBoard } from "../utils/boardAPI";
 
+import { supabase } from "~/server/utils/supabaseClient";
+
 const AllChipBoards = () => {
     const router = useRouter();
     const { createBoard } = useCreateBoard();
@@ -28,6 +30,15 @@ const AllChipBoards = () => {
             setFormData({ chipName: "", entry: "", rating: "" }); 
         }
     }
+
+    const handleLogout = async () => {
+        const {error} = await supabase.auth.signOut();
+        if(error){
+            alert("Logout failed: " + error.message);
+        }else{
+            alert("User has logged out!");
+        }
+    };
 
     return(
         <div>
@@ -68,6 +79,8 @@ const AllChipBoards = () => {
 
                 <button type="submit"> Add Board </button>
             </form>
+
+            <button onClick={() =>{ handleLogout() }}> LOG OUT </button>
         </div>
     )
 }
