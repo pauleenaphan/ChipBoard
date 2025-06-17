@@ -30,11 +30,8 @@ const ChipBoard = () =>{
     const handleEditForm = async(e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
         if(formData.chipName && formData.entry){
-            const status = await editBoard(boardId, formData.chipName, formData.entry, String(formData.rating));
-            if(status == true){ 
-                //close the form 
-                router.push(`/chipBoard/${boardId}`);
-            }
+            // backend checks for validation
+            await editBoard(boardId, formData.chipName, formData.entry, String(formData.rating));
         }else{
             console.log(typeof formData.rating);
         }
