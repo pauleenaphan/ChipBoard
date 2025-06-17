@@ -12,7 +12,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "~/server/db";
-import { createPagesServerClient } from '@supabase/auth-helpers-nextjs';
+import { supabase } from "~/server/utils/supabaseClient";
 import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 /**
@@ -28,17 +28,64 @@ import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
  * @see https://trpc.io/docs/server/context
  */
 
-export const createTRPCContext = async ({ req, res }: CreateNextContextOptions) => {
-  const supabase = createPagesServerClient({ req, res });
+export const createTRPCContext = async (opts: { headers: Headers | Record<string, string> }) => {
+  let authHeader: string | null = null;
+  
+  if (opts.headers instanceof Headers) {
+    authHeader = opts.headers.get("authorization");
+  } else {
+    authHeader = opts.headers["authorization"] as string | undefined || null;
+  }
+  
+  if (!authHeader) {
+    console.log("No authorization header found in request");
+    return {
+      db,
+      user: null,
+    };
+  }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const token = authHeader.split(" ")[1];
+  if (!token) {
+    console.log("No token found in authorization header");
+    return {
+      db,
+      user: null,
+    };
+  }
+  
+  try {
+    console.log("Attempting to verify token with Supabase");
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+    
+    if (error) {
+      console.error("Error verifying token:", error);
+      return {
+        db,
+        user: null,
+      };
+    }
 
-  return {
-    db,
-    user,
-  };
+    if (!user) {
+      console.log("No user found for token");
+      return {
+        db,
+        user: null,
+      };
+    }
+
+    console.log("Successfully authenticated user:", user.id);
+    return {
+      db,
+      user,
+    };
+  } catch (error) {
+    console.error("Error in createTRPCContext:", error);
+    return {
+      db,
+      user: null,
+    };
+  }
 };
 
 /**
