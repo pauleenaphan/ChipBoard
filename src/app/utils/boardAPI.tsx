@@ -1,20 +1,26 @@
 import { getFormattedToday } from "../utils/helper";
 import { api } from "~/trpc/react";
-import { getTrpcClient } from "~/server/utils/supabaseClient";
 
 export const useCreateBoard = () => {
+    const utils = api.useUtils();
+    const { mutateAsync: createBoardMutation } = api.board.addBoard.useMutation({
+        onSuccess: async () => {
+            // Invalidate and refetch the boards
+            await utils.board.getAllBoards.invalidate();
+        }
+    });
+
     const createBoard = async (chipName: string, entry: string, rating: string) => {
-        try{
-            const client = await getTrpcClient();
-            await client.board.addBoard.mutate({
+        try {
+            await createBoardMutation({
                 chipName,
                 entry,
                 date: getFormattedToday(),
                 rating: Number(rating),
             });
-                alert("board has been created");
-                return true;
-        }catch(error){
+            alert("board has been created");
+            return true;
+        } catch(error) {
             console.error("Error creating new board", error);
             return false;
         }
@@ -23,11 +29,18 @@ export const useCreateBoard = () => {
     return { createBoard };
 };
 
-export const useEditBoard = () =>{
-    const { mutateAsync: editBoardMutation, error } = api.board.editBoard.useMutation();
+export const useEditBoard = () => {
+    const utils = api.useUtils();
+    const { mutateAsync: editBoardMutation, error } = api.board.editBoard.useMutation({
+        onSuccess: async () => {
+            // Invalidate and refetch the board queries
+            await utils.board.getAllBoards.invalidate();
+            await utils.board.getBoard.invalidate();
+        }
+    });
 
-    const editBoard = async(id: number, chipName: string, entry: string, rating: string) =>{
-        try{
+    const editBoard = async(id: number, chipName: string, entry: string, rating: string) => {
+        try {
             await editBoardMutation({
                 id,
                 chipName,
@@ -36,7 +49,7 @@ export const useEditBoard = () =>{
             });
             alert("board has been edited");
             return true;
-        }catch(error){
+        } catch(error) {
             console.error("Error editing board", error);
             return false;
         }
