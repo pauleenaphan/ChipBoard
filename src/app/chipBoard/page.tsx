@@ -2,7 +2,7 @@
 "use client"
 
 import { api } from "~/trpc/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 import { useCreateBoard } from "../utils/boardAPI";
@@ -12,7 +12,49 @@ import { supabase } from "~/server/utils/supabaseClient";
 const AllChipBoards = () => {
     const router = useRouter();
     const { createBoard } = useCreateBoard();
-    const { data: allBoards, isLoading } = api.board.getAllBoards.useQuery();
+    const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+    const [retryCount, setRetryCount] = useState(0);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession();
+                if (error) {
+                    console.error("Error checking auth:", error);
+                    router.push("/auth/login");
+                    return;
+                }
+                
+                if (!session?.access_token) {
+                    console.log("No session found, redirecting to login");
+                    router.push("/auth/login");
+                } else {
+                    console.log("Session found, proceeding to load boards");
+                    setIsCheckingAuth(false);
+                }
+            } catch (error) {
+                console.error("Error in checkAuth:", error);
+                router.push("/auth/login");
+            }
+        };
+        checkAuth();
+    }, [router]);
+
+    const { data: allBoards, isLoading, error } = api.board.getAllBoards.useQuery(undefined, {
+        retry: 3,
+        retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+        enabled: !isCheckingAuth,
+    });
+
+    useEffect(() => {
+        if (error?.message?.includes("UNAUTHORIZED")) {
+            console.error("Error loading boards:", error);
+            setRetryCount(prev => prev + 1);
+            if (retryCount >= 2) {
+                router.push("/auth/login");
+            }
+        }
+    }, [error, retryCount, router]);
 
     const [formData, setFormData] = useState({
         chipName: "",
@@ -20,16 +62,22 @@ const AllChipBoards = () => {
         rating: "",
     });
 
-    if (isLoading) return <div>Loading...</div>;
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
-        e.preventDefault();
-
-        const status = await createBoard(formData.chipName, formData.entry, formData.rating);
-        if(status == true){ 
-            setFormData({ chipName: "", entry: "", rating: "" }); 
+    if (isCheckingAuth || isLoading) return <div>Loading...</div>;
+    if (error) {
+        console.error("Error loading boards:", error);
+        if (error.message.includes("UNAUTHORIZED")) {
+            return <div>Please log in to view boards</div>;
         }
+        return <div>Error loading boards: {error.message}</div>;
     }
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const status = await createBoard(formData.chipName, formData.entry, formData.rating);
+        if (status === true) {
+            setFormData({ chipName: "", entry: "", rating: "" });
+        }
+    };
 
     const handleLogout = async () => {
         const {error} = await supabase.auth.signOut();
