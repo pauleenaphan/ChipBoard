@@ -28,31 +28,52 @@ const SignupForm = () => {
     };
 
     return (
-        <form onSubmit={handleSignup}>
-            <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-            />
-            <input
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
-                required
-            />
-            <button type="submit">Sign Up</button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-        </form>
+        <>
+            <div className="mx-auto p-10 rounded-2xl border-2 flex flex-col justify-center items-center">
+                <h1 className="heading"> Welcome to Chipboard! </h1>
+                <p className="text-2xl"> Ready to start tracking each crunnch? </p>
+            </div>
+            
+            <form onSubmit={handleSignup}
+                className="flex flex-col gap-4"
+            >
+                <div>
+                    <label> Email: </label>
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        required
+                        className="py-4 px-8 rounded-2xl"
+                    />
+                </div>
+                <div>
+                    <label> Password: </label>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                        className="py-4 px-8 rounded-2xl"
+                    />
+                </div>
+                <div>
+                    <label> Confirm Password: </label>
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={e => setConfirmPassword(e.target.value)}
+                        required
+                        className="py-4 px-8 rounded-2xl"
+                    />
+                </div>
+                <button type="submit" className="ctaBtn">Sign Up</button>
+                {error && <p className="text-2xl text-red-800">{error}</p>}
+            </form>
+        </>
     );
 }
 

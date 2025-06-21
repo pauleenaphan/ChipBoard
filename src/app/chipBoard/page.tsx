@@ -9,11 +9,19 @@ import { useCreateBoard } from "../utils/boardAPI";
 
 import { supabase } from "~/server/utils/supabaseClient";
 
+import Modal from "../_components/Modal";
+
 const AllChipBoards = () => {
     const router = useRouter();
     const { createBoard } = useCreateBoard();
     const [isCheckingAuth, setIsCheckingAuth] = useState(true);
     const [retryCount, setRetryCount] = useState(0);
+    const [newFormVisible, setNewFormVisible] = useState(false);
+    const [formData, setFormData] = useState({
+        chipName: "",
+        entry: "",
+        rating: "",
+    });
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -56,12 +64,6 @@ const AllChipBoards = () => {
         }
     }, [error, retryCount, router]);
 
-    const [formData, setFormData] = useState({
-        chipName: "",
-        entry: "",
-        rating: "",
-    });
-
     if (isCheckingAuth || isLoading) return <div>Loading...</div>;
     if (error) {
         console.error("Error loading boards:", error);
@@ -79,56 +81,67 @@ const AllChipBoards = () => {
         }
     };
 
-    const handleLogout = async () => {
-        const {error} = await supabase.auth.signOut();
-        if(error){
-            alert("Logout failed: " + error.message);
-        }else{
-            alert("User has logged out!");
-        }
-    };
-
     return(
         <div>
-            <div> all chips boards here </div>
-            {!isLoading && allBoards?.map((board) => (
-                <div key={board.id}
-                    onClick={() =>{ router.push(`/chipBoard/${board.id}`)}}>
-                    {board.chipName}
-                    <p> board_Id: {board.id} </p>
-                </div>
-            ))}
-            <form onSubmit={ handleSubmit }>
-                <div> new board </div>
-                <label> Name:  </label>
-                <input type="text" placeholder="Name of Chip" value={formData.chipName} required={true}
-                    onChange={(e) =>
-                        setFormData({ ...formData, chipName: e.target.value })
-                    }
-                />
+            <div className="flex justify-between">
+                <h1 className="heading"> Your Chip Boards </h1>
+                <button onClick={() =>{ setNewFormVisible(true)}}> Add Board </button>
+            </div>
+            
+            <div className="flex flex-wrap gap-4 items-center">
+                {!isLoading && allBoards?.map((board) => (
+                    <div key={board.id}
+                        onClick={() =>{ router.push(`/chipBoard/${board.id}`)}}
+                        className="flex flex-col gap-4 p-8"
+                        >
+                        <div className="flex flex-col gap-2"> 
+                            <h2 className="text-2xl">{board.chipName}</h2>
+                            <p> Munched on: {board.date} </p>
+                        <p className="text-xl"> {board.entry} </p>
+                        </div>
+                        <p> Rating: {board.rating} </p>
+                    </div>
+                ))}
+            </div>
+            
+            <Modal title="New Chip Board" 
+                description="Rate the chips you just tried and share your thoughts" 
+                isOpen={newFormVisible}
+                onClose={() =>{ setNewFormVisible(false) }}
+            >
+                <form onSubmit={ handleSubmit } >
+                    <label className="font-bold text-2xl"> Name:  </label>
+                    <input 
+                        type="text" 
+                        placeholder="Name of Chip" 
+                        value={formData.chipName} 
+                        required={true}
+                        onChange={(e) =>
+                            setFormData({ ...formData, chipName: e.target.value })
+                        }
+                    />
 
-                <label> Entry: </label>
-                <textarea placeholder="What did you hate/like? How did the crunch make you feel? "
-                    required={true}
-                    value={formData.entry}
-                    onChange={(e) =>
-                        setFormData({ ...formData, entry: e.target.value })
-                    }
-                />
+                    <label> Entry: </label>
+                    <textarea placeholder="What did you hate/like? How did the crunch make you feel?"
+                        required={true}
+                        value={formData.entry}
+                        onChange={(e) =>
+                            setFormData({ ...formData, entry: e.target.value })
+                        }
+                    />
 
-                <label> Rating: </label>
-                <input type="number" min={1} max={10} placeholder="10/10"
-                    required={true}
-                    value={formData.rating}
-                    onChange={(e) =>
-                        setFormData({ ...formData, rating: e.target.value }) // + converts val to a number
-                    }
-                />
+                    <label> Rating: </label>
+                    <input type="number" min={1} max={10} placeholder="10/10"
+                        required={true}
+                        value={formData.rating}
+                        onChange={(e) =>
+                            setFormData({ ...formData, rating: e.target.value }) // + converts val to a number
+                        }
+                    />
 
-                <button type="submit"> Add Board </button>
-            </form>
-
-            <button onClick={() =>{ handleLogout() }}> LOG OUT </button>
+                    <button type="submit"> Add Board </button>
+                </form>
+            </Modal>
         </div>
     )
 }

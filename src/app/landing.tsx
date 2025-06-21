@@ -46,8 +46,38 @@ export const LandingPage = () =>{
                 </p>
                 <p className="font-bold"> | Because every chip deserves a rating  </p>
             </section>
-        </main>
-        
 
+            <section className="flex flex-col w-[50%] mx-auto justify-between">
+                <h4 className="heading text-center"> Real Takes, Real CHips </h4>
+                <div className="text-2xl flex flex-col w-[100%]">
+                    <div className="flex flex-col justify-center items-center w-[50%]">
+                        <p> 4/5 chips </p>
+                        <p> I used to forget which spicy chips I liked. Now I track every bag. It's addicting. </p>
+                        <p className="font-bold"> Bob - Competitive Cruncher </p>
+                    </div>
+                    <div>
+                        <p> 5/5 chips </p>
+                        <p> Chipboard makes my life so much easier. Before chipboard, I forgot what captin crunch tasted like. </p>
+                        <p> Robert - An old grandpa </p>
+                    </div>
+                </div>
+                <div>
+                    <p> 5/5 chips </p>
+                    <p> I love chips, but I love tracking even more. Since chipboard came out, I been getting fatter and eating more chips. </p>
+                    <p> Sarah - A writer  </p>
+                </div>
+                <div>
+                    <p> 5/5 chips </p>
+                    <p> It's super easy to use and navigate through. With chipboard I been on a quest to try every single lays flavor. </p>
+                    <p> Layla - A Lays lover  </p>
+                </div>
+            </section>
+
+            <section className="flex flex-col w-[50%] mx-auto text-center">
+                <h5 className="heading text-center"> Start your Chip Log Today</h5>
+                <p className="text-2xl"> You know you want to </p>
+                <Link href="/chipBoard" className="ctaBtn"> Start Rating </Link>
+            </section>
+        </main>
     )
 }
