@@ -5,8 +5,11 @@ import { api } from "~/trpc/react";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
-import { useCreateBoard } from "../utils/boardAPI";
+import { BsPencilSquare } from "react-icons/bs";
 
+import { Loading } from "../_components/Loading";
+
+import { useCreateBoard } from "../utils/boardAPI";
 import { supabase } from "~/server/utils/supabaseClient";
 
 import Modal from "../_components/Modal";
@@ -64,7 +67,7 @@ const AllChipBoards = () => {
         }
     }, [error, retryCount, router]);
 
-    if (isCheckingAuth || isLoading) return <div>Loading...</div>;
+    if (isCheckingAuth || isLoading) return <Loading></Loading>;
     if (error) {
         console.error("Error loading boards:", error);
         if (error.message.includes("UNAUTHORIZED")) {
@@ -82,24 +85,25 @@ const AllChipBoards = () => {
     };
 
     return(
-        <div>
+        <div className="w-[70%] mx-auto">
             <div className="flex justify-between">
                 <h1 className="heading"> Your Chip Boards </h1>
-                <button onClick={() =>{ setNewFormVisible(true)}}> Add Board </button>
+                <BsPencilSquare onClick={() =>{ setNewFormVisible(true)}} className="hover:text-gray-700 hover:cursor-pointer text-5xl font-bold"/>
+                
             </div>
             
             <div className="flex flex-wrap gap-4 items-center">
                 {!isLoading && allBoards?.map((board) => (
                     <div key={board.id}
                         onClick={() =>{ router.push(`/chipBoard/${board.id}`)}}
-                        className="flex flex-col gap-4 p-8"
+                        className="flex flex-col gap-4 border-4 rounded-2xl p-8 hover:bg-yellow-500 hover:cursor-pointer"
                         >
                         <div className="flex flex-col gap-2"> 
-                            <h2 className="text-2xl">{board.chipName}</h2>
+                            <h2 className="text-2xl font-bold">{board.chipName}</h2>
                             <p> Munched on: {board.date} </p>
-                        <p className="text-xl"> {board.entry} </p>
+                        <p className="text-xl line-clamp-2"> {board.entry} </p>
                         </div>
-                        <p> Rating: {board.rating} </p>
+                        <p> Rating: {board.rating} Chips </p>
                     </div>
                 ))}
             </div>

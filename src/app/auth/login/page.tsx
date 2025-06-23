@@ -76,7 +76,7 @@ const LoginForm = () => {
                 <button type="submit" className="ctaBtn w-fit mx-auto"> Login </button>
                 <p className="mx-auto"> New User? <Link href="/auth/signup" className="underline font-bold"> Create Account </Link> </p>
 
-                {error && <p className="text-red-800">{error}</p>}
+                {error && <p className="text-blue-900 text-center font-bold">{error}</p>}
             </form>
         </div>
     );
