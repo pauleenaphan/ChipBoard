@@ -30,12 +30,12 @@ export const Navbar = () =>{
             <h1 className="text-4xl text-yellow-500"
             style={{ fontFamily: "'Luckiest Guy', cursive" }}
             > CHIPBOARD </h1>
-            <div className="flex gap-4 font-bold">
-                <Link href="/"> Home </Link>
-                <Link href="/about"> About </Link>
-                <Link href="/browse"> Browse </Link>
+            <div className="flex gap-4 font-bold ">
+                <Link href="/" className="hover:text-gray-300"> Home </Link>
+                <Link href="/about" className="hover:text-gray-300"> About </Link>
+                <Link href="/browse" className="hover:text-gray-300"> Browse </Link>
                 {/* /chipBoard will check and redirect user if not logged in */}
-                <Link href="/chipBoard"> Board </Link>
+                <Link href="/chipBoard" className="hover:text-gray-300"> Board </Link>
             </div>
             <div className="flex gap-4 items-center font-bold">
                 {session?.access_token ? (
@@ -45,7 +45,7 @@ export const Navbar = () =>{
                         > Logout </button>
                 ):(
                     <>
-                        <Link href="/auth/login"> Login </Link>
+                        <Link href="/auth/login" className="hover:text-gray-300"> Login </Link>
                         <Link href="/auth/signup"
                             className="ctaBtn"
                         > Sign Up </Link>

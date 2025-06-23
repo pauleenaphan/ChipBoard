@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { GiChipsBag } from "react-icons/gi";
-import { FaPencilAlt, FaClipboard } from "react-icons/fa";
+import { FaPencilAlt, FaClipboard, FaUserTie, FaUserSecret, FaUserGraduate  } from "react-icons/fa";
+import { FaUserAstronaut } from "react-icons/fa6";
 
 export const LandingPage = () =>{
     return(
-        <main className="flex flex-col gap-30">
-            <section className="flex gap-5 flex-col w-[50%] mx-auto text-center">
+        <main className="flex flex-col gap-50">
+            <section className="flex gap-5 flex-col w-[60%] mx-auto text-center">
                 <h1 className="text-7xl"
                 style={{ fontFamily: "'Luckiest Guy', cursive" }}> 
                 <p className="yellow-underline">TRACK</p>, <p className="yellow-underline">RATE</p>, AND <p className="yellow-underline">EXPLORE </p> CHIPS. ALL IN ONE PLACE </h1>
@@ -19,7 +20,7 @@ export const LandingPage = () =>{
                 </div>
             </section>
 
-            <section className="flex items-center flex-col w-[50%] mx-auto text-center">
+            <section className="flex items-center flex-col w-[60%] mx-auto text-center">
                 <h2 className="heading"> How it Works </h2>
                 <div className="flex justify-between w-[100%]">
                     <div className="border-4 flex items-center flex-col p-10 rounded-2xl w-[32%] justify-center">
@@ -37,47 +38,74 @@ export const LandingPage = () =>{
                 </div>
             </section>
 
-            <section className="flex flex-col w-[50%] mx-auto justify-between">
+            <section className="flex flex-col w-[60%] mx-auto justify-between">
                 <h3 className="heading text-center"> Why use Chipboard? </h3>
                 <p className="text-2xl mb-2">
                     We eat so many chips, we lose count. ChipBoard lets you keep track of every crunchy
                     bag — the good, the bad, and the cheesy. It’s just a fun way to log your favorites 
                     (and the ones you’ll never eat again).
                 </p>
-                <p className="font-bold"> | Because every chip deserves a rating  </p>
+                <p className="font-bold text-2xl"> | Because every chip deserves a rating  </p>
             </section>
 
-            <section className="flex flex-col w-[50%] mx-auto justify-between">
-                <h4 className="heading text-center"> Real Takes, Real CHips </h4>
-                <div className="text-2xl flex flex-col w-[100%]">
-                    <div className="flex flex-col justify-center items-center w-[50%]">
-                        <p> 4/5 chips </p>
-                        <p> I used to forget which spicy chips I liked. Now I track every bag. It's addicting. </p>
-                        <p className="font-bold"> Bob - Competitive Cruncher </p>
+            <section className="w-[100%] bg-yellow-500 py-20">
+                <div className="flex flex-col w-[60%] mx-auto justify-between">
+                    <h4 className="heading text-center"> Real Takes, Real CHips </h4>
+                    <div className="grid grid-cols-2 text-2xl w-[100%] gap-4">
+                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4">
+                            <p> I used to forget which spicy chips I liked. Now I track every bag. It's addicting. I now munch and track for a living. </p>
+                            <div className="flex flex-row items-center gap-4">
+                                <FaUserTie className="text-6xl bg-gray-100 p-2 rounded-xl"/>
+                                <div className="text-xl">
+                                    <p className="font-bold"> Competitive Cruncher - Bob </p>
+                                    <p> 4/5 chips </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4">
+                            <p> Chipboard makes my work so much easier. Now I can track what my target has been munching on. I'm always crunching on the job.</p>
+                            <div className="flex flex-row items-center gap-4">
+                                <FaUserSecret className="text-6xl bg-gray-100 p-2 rounded-xl"/>
+                                <div className="text-xl">
+                                    <p className="font-bold"> Private Investigator - Robert </p>
+                                    <p> 5/5 chips </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4">
+                            <p> I love chips, but I love tracking even more. Since chipboard came out, I been getting fatter and eating more chips. The moon can't hold me up. </p>
+                            <div className="flex flex-row items-center gap-4">
+                                <FaUserAstronaut className="text-6xl bg-gray-100 p-2 rounded-xl"/>
+                                <div className="text-xl">
+                                    <p className="font-bold"> Astronaut - Sarah </p>
+                                    <p> 5/5 chips </p>
+                                </div>
+                            </div>
+                        </div>
+                            <div className="flex flex-col border-4 rounded-2xl p-6 gap-4">
+                            <p> It's super easy to use and navigate through. With chipboard I been on a quest to try every single lays flavor. It has helped me relieve stress in college. </p>
+                            <div className="flex flex-row items-center gap-4">
+                                <FaUserGraduate className="text-6xl bg-gray-100 p-2 rounded-xl"/>
+                                <div className="text-xl">
+                                    <p className="font-bold"> Lays lover - Layla </p>
+                                    <p> 5/5 chips </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <p> 5/5 chips </p>
-                        <p> Chipboard makes my life so much easier. Before chipboard, I forgot what captin crunch tasted like. </p>
-                        <p> Robert - An old grandpa </p>
-                    </div>
-                </div>
-                <div>
-                    <p> 5/5 chips </p>
-                    <p> I love chips, but I love tracking even more. Since chipboard came out, I been getting fatter and eating more chips. </p>
-                    <p> Sarah - A writer  </p>
-                </div>
-                <div>
-                    <p> 5/5 chips </p>
-                    <p> It's super easy to use and navigate through. With chipboard I been on a quest to try every single lays flavor. </p>
-                    <p> Layla - A Lays lover  </p>
                 </div>
             </section>
 
             <section className="flex flex-col w-[50%] mx-auto text-center">
                 <h5 className="heading text-center"> Start your Chip Log Today</h5>
-                <p className="text-2xl"> You know you want to </p>
-                <Link href="/chipBoard" className="ctaBtn"> Start Rating </Link>
+                <div className="mb-4">
+                    <p className="text-2xl">Track your progress. Crush your goals.</p>
+                    <p className="italic"> You know you want to </p>
+                </div>
+                
+                <Link href="/chipBoard" className="ctaBtn w-fit mx-auto"> Start Rating </Link>
             </section>
+            
         </main>
     )
 }
