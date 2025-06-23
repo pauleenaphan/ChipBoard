@@ -35,7 +35,7 @@ export const Navbar = () =>{
                 <Link href="/about" className="hover:text-gray-300"> About </Link>
                 <Link href="/browse" className="hover:text-gray-300"> Browse </Link>
                 {/* /chipBoard will check and redirect user if not logged in */}
-                <Link href="/chipBoard" className="hover:text-gray-300"> Board </Link>
+                <Link href="/chipBoard"> Board </Link>
             </div>
             <div className="flex gap-4 items-center font-bold">
                 {session?.access_token ? (
@@ -45,7 +45,7 @@ export const Navbar = () =>{
                         > Logout </button>
                 ):(
                     <>
-                        <Link href="/auth/login" className="hover:text-gray-300"> Login </Link>
+                        <Link href="/auth/login"> Login </Link>
                         <Link href="/auth/signup"
                             className="ctaBtn"
                         > Sign Up </Link>
