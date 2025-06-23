@@ -10,7 +10,8 @@ const Modal: React.FC<ModalProps> = ({ title, description, isOpen, onClose, chil
 if (!isOpen) return null; // Don't render if not open
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50"
+        <div className="fixed inset-0 flex items-center justify-center bg-black backdrop-blur-sm z-50"
+        style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(0px)" }}
             // onClick={onClose}
         >
             <div className="relative p-10 rounded-lg shadow-lg w-[30%] text-center bg-yellow-500">

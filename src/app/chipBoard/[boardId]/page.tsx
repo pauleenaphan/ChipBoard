@@ -38,7 +38,10 @@ const ChipBoard = () =>{
         e.preventDefault();
         if(formData.chipName && formData.entry){
             // backend checks for validation
-            await editBoard(boardId, formData.chipName, formData.entry, String(formData.rating));
+            const status = await editBoard(boardId, formData.chipName, formData.entry, String(formData.rating));
+            if(status == true){
+                setEditFormVisible(false);
+            }
         }else{
             console.log(typeof formData.rating);
         }
@@ -80,12 +83,12 @@ const ChipBoard = () =>{
             >
                 <form onSubmit={ handleEditForm } className="flex flex-col gap-4">
                     <div className="flex flex-col">
-                        <label className="font-bold text-left "> Chip: </label>
+                        <label className="font-bold text-left"> Chip: </label>
                         <input type="text" placeholder="Name of Chip" value={formData.chipName} required={true}
                             onChange={(e) =>
                                 setFormData({ ...formData, chipName: e.target.value })
                             }
-                            className="border-3 p-3 rounded-xl bg-white"
+                            className="border-3 p-3 rounded-xl bg-white outline-none"
                         />
                     </div>
                     
@@ -97,7 +100,7 @@ const ChipBoard = () =>{
                             onChange={(e) =>
                                 setFormData({ ...formData, entry: e.target.value })
                             }
-                            className="border-3 p-3 rounded-xl h-50 bg-white"
+                            className="border-3 p-3 rounded-xl h-50 bg-white outline-none"
                         />
                     </div>
                     
@@ -109,7 +112,7 @@ const ChipBoard = () =>{
                             onChange={(e) =>
                                 setFormData({ ...formData, rating: +e.target.value }) // + converts val to a number
                             }
-                            className="border-3 p-3 rounded-xl bg-white"
+                            className="border-3 p-3 rounded-xl bg-white outline-none"
                         />
                     </div>
                     <button type="submit"> Edit Board </button>

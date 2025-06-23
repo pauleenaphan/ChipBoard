@@ -80,6 +80,7 @@ const AllChipBoards = () => {
         e.preventDefault();
         const status = await createBoard(formData.chipName, formData.entry, formData.rating);
         if (status === true) {
+            setNewFormVisible(false);
             setFormData({ chipName: "", entry: "", rating: "" });
         }
     };
@@ -94,16 +95,17 @@ const AllChipBoards = () => {
             
             <div className="flex flex-wrap gap-4 items-center">
                 {!isLoading && allBoards?.map((board) => (
-                    <div key={board.id}
-                        onClick={() =>{ router.push(`/chipBoard/${board.id}`)}}
-                        className="flex flex-col gap-4 border-4 rounded-2xl p-8 hover:bg-yellow-500 hover:cursor-pointer"
-                        >
-                        <div className="flex flex-col gap-2"> 
-                            <h2 className="text-2xl font-bold">{board.chipName}</h2>
-                            <p> Munched on: {board.date} </p>
-                        <p className="text-xl line-clamp-2"> {board.entry} </p>
-                        </div>
-                        <p> Rating: {board.rating} Chips </p>
+                    <div
+                    key={board.id}
+                    onClick={() => { router.push(`/chipBoard/${board.id}`) }}
+                    className="flex flex-col gap-4 border-4 rounded-2xl p-8 hover:bg-yellow-500 hover:cursor-pointer flex-1 min-w-[400px]"
+                    >
+                    <div className="flex flex-col gap-2">
+                        <h2 className="text-2xl font-bold">{board.chipName}</h2>
+                        <p> Munched on: {board.date} </p>
+                        <p className="truncate w-full">{board.entry}</p>
+                    </div>
+                    <p> Rating: {board.rating} Chips </p>
                     </div>
                 ))}
             </div>
@@ -113,35 +115,44 @@ const AllChipBoards = () => {
                 isOpen={newFormVisible}
                 onClose={() =>{ setNewFormVisible(false) }}
             >
-                <form onSubmit={ handleSubmit } >
-                    <label className="font-bold text-2xl"> Name:  </label>
-                    <input 
-                        type="text" 
-                        placeholder="Name of Chip" 
-                        value={formData.chipName} 
-                        required={true}
-                        onChange={(e) =>
-                            setFormData({ ...formData, chipName: e.target.value })
-                        }
-                    />
-
-                    <label> Entry: </label>
-                    <textarea placeholder="What did you hate/like? How did the crunch make you feel?"
-                        required={true}
-                        value={formData.entry}
-                        onChange={(e) =>
-                            setFormData({ ...formData, entry: e.target.value })
-                        }
-                    />
-
-                    <label> Rating: </label>
-                    <input type="number" min={1} max={10} placeholder="10/10"
-                        required={true}
-                        value={formData.rating}
-                        onChange={(e) =>
-                            setFormData({ ...formData, rating: e.target.value }) // + converts val to a number
-                        }
-                    />
+                <form onSubmit={ handleSubmit } className="flex flex-col gap-4">
+                    <div className="flex flex-col">
+                        <label className="font-bold text-left"> Name:  </label>
+                        <input 
+                            type="text" 
+                            placeholder="Name of Chip" 
+                            value={formData.chipName} 
+                            required={true}
+                            onChange={(e) =>
+                                setFormData({ ...formData, chipName: e.target.value })
+                            }
+                            className="border-3 p-3 rounded-xl bg-white outline-none"
+                        />
+                    </div>
+                    
+                    <div className="flex flex-col">
+                        <label className="font-bold text-left"> Entry: </label>
+                        <textarea placeholder="What did you hate/like? How did the crunch make you feel?"
+                            required={true}
+                            value={formData.entry}
+                            onChange={(e) =>
+                                setFormData({ ...formData, entry: e.target.value })
+                            }
+                            className="border-3 p-3 rounded-xl bg-white outline-none h-50"
+                        />
+                    </div>
+                    
+                    <div className="flex flex-col">
+                        <label className="font-bold text-left"> Rating: </label>
+                        <input type="number" min={1} max={10} placeholder="10/10"
+                            required={true}
+                            value={formData.rating}
+                            onChange={(e) =>
+                                setFormData({ ...formData, rating: e.target.value }) // + converts val to a number
+                            }
+                            className="border-3 p-3 rounded-xl bg-white outline-none"
+                        />
+                    </div>
 
                     <button type="submit"> Add Board </button>
                 </form>
