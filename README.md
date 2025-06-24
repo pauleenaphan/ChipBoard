@@ -1,5 +1,5 @@
 # ChipBoard
-Chipboard is a web app for tracking and reviewing chips users have tasted by creating personal boards.
+Chipboard is a web app for tracking and reviewing chips users have tasted by creating personal boards. Tried a chip? Start your tracking journey and start rating.
 
 # Purpose
 This project was created to practice the T3 stack and improve my web development skills.
