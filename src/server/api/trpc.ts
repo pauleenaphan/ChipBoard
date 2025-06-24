@@ -13,7 +13,6 @@ import { ZodError } from "zod";
 
 import { db } from "~/server/db";
 import { supabase } from "~/server/utils/supabaseClient";
-import type { CreateNextContextOptions } from "@trpc/server/adapters/next";
 
 /**
  * 1. CONTEXT
@@ -34,7 +33,7 @@ export const createTRPCContext = async (opts: { headers: Headers | Record<string
   if (opts.headers instanceof Headers) {
     authHeader = opts.headers.get("authorization");
   } else {
-    authHeader = opts.headers["authorization"] as string | undefined || null;
+    authHeader = opts.headers.authorization as string | undefined ?? null;
   }
   
   if (!authHeader) {

@@ -48,7 +48,7 @@ const AllChipBoards = () => {
                 router.push("/auth/login");
             }
         };
-        checkAuth();
+        void checkAuth();
     }, [router]);
 
     const { data: allBoards, isLoading, error } = api.board.getAllBoards.useQuery(undefined, {

@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
     // Get the origin from the request headers
-    const origin = request.headers.get('origin') || ''
+    const origin = request.headers.get('origin') ?? ''
 
     // Handle preflight requests
     if (request.method === 'OPTIONS') {

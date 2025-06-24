@@ -104,7 +104,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
       }
     };
 
-    initialize();
+    void initialize();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       console.log("Auth state changed:", event, session ? "Session exists" : "No session");

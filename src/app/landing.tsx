@@ -11,7 +11,7 @@ export const LandingPage = () =>{
                 style={{ fontFamily: "'Luckiest Guy', cursive" }}> 
                 <p className="yellow-underline">TRACK</p>, <p className="yellow-underline">RATE</p>, AND <p className="yellow-underline">EXPLORE </p> CHIPS. ALL IN ONE PLACE </h1>
                 <p className="text-2xl">
-                    Chipboard is a platform where you can log every chip you've
+                    Chipboard is a platform where you can log every chip you&apos;ve
                     tried. Love it or hate it? Use this site to rate it.
                 </p>
                 <div className="flex justify-center items-center gap-4">
@@ -52,8 +52,8 @@ export const LandingPage = () =>{
                 <div className="flex flex-col w-[60%] mx-auto justify-between">
                     <h4 className="heading text-center"> Real Takes, Real CHips </h4>
                     <div className="grid grid-cols-2 text-2xl w-[100%] gap-4">
-                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4">
-                            <p> I used to forget which spicy chips I liked. Now I track every bag. It's addicting. I now munch and track for a living. </p>
+                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4 justify-between">
+                            <p> I used to forget which spicy chips I liked. Now I track every bag. It&apos;s addicting. I now munch and track for a living. </p>
                             <div className="flex flex-row items-center gap-4">
                                 <FaUserTie className="text-6xl bg-gray-100 p-2 rounded-xl"/>
                                 <div className="text-xl">
@@ -62,8 +62,8 @@ export const LandingPage = () =>{
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4">
-                            <p> Chipboard makes my work so much easier. Now I can track what my target has been munching on. I'm always crunching on the job.</p>
+                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4 justify-between">
+                            <p> Chipboard makes my work so much easier. Now I can track what my target has been munching on. I&apos;m always crunching on the job.</p>
                             <div className="flex flex-row items-center gap-4">
                                 <FaUserSecret className="text-6xl bg-gray-100 p-2 rounded-xl"/>
                                 <div className="text-xl">
@@ -72,8 +72,8 @@ export const LandingPage = () =>{
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4">
-                            <p> I love chips, but I love tracking even more. Since chipboard came out, I been getting fatter and eating more chips. The moon can't hold me up. </p>
+                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4 justify-between">
+                            <p> I love chips, but I love tracking even more. Since chipboard came out, I been getting fatter and eating more chips. The moon can&apos;t hold me up. </p>
                             <div className="flex flex-row items-center gap-4">
                                 <FaUserAstronaut className="text-6xl bg-gray-100 p-2 rounded-xl"/>
                                 <div className="text-xl">
@@ -82,8 +82,8 @@ export const LandingPage = () =>{
                                 </div>
                             </div>
                         </div>
-                            <div className="flex flex-col border-4 rounded-2xl p-6 gap-4">
-                            <p> It's super easy to use and navigate through. With chipboard I been on a quest to try every single lays flavor. It has helped me relieve stress in college. </p>
+                        <div className="flex flex-col border-4 rounded-2xl p-6 gap-4 justify-between">
+                            <p> It&apos;s super easy to use and navigate through. With chipboard I been on a quest to try every single lays flavor. It has helped me relieve stress in college. </p>
                             <div className="flex flex-row items-center gap-4">
                                 <FaUserGraduate className="text-6xl bg-gray-100 p-2 rounded-xl"/>
                                 <div className="text-xl">

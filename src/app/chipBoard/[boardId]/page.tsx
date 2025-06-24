@@ -63,7 +63,8 @@ const ChipBoard = () =>{
                                 </div>
                                 <div className="flex gap-2 text-4xl">
                                     <FaPencil onClick={() =>{ setEditFormVisible(true)}} className="hover:text-gray-700 hover:cursor-pointer"></FaPencil>
-                                    <FaRegTrashCan onClick={() =>{ handleDeleteBoard(boardId)}} className="hover:text-gray-700 hover:cursor-pointer"></FaRegTrashCan>
+                                    <FaRegTrashCan onClick={() =>{ void handleDeleteBoard(boardId)}} className="hover:text-gray-700 hover:cursor-pointer"></FaRegTrashCan>
+                                    {/* Void discards the return promise and silences the linter */}
                                 </div>
                             </div>
                             

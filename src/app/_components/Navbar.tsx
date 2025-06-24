@@ -9,10 +9,10 @@ export const Navbar = () =>{
 
     useEffect(() => {
         const getSession = async () => { 
-            const { data: { session }, error } = await supabase.auth.getSession();
+            const { data: { session } } = await supabase.auth.getSession();
             setSession(session);
         };
-        getSession();
+        void getSession();
     }, []);
 
     const handleLogout = async () => {
@@ -22,6 +22,7 @@ export const Navbar = () =>{
         }else{
             alert("User has logged out!");
             setSession(null); // so that navbar will show login/signup
+            window.location.href = '/';
         }
     };
 
@@ -40,7 +41,7 @@ export const Navbar = () =>{
             <div className="flex gap-4 items-center font-bold">
                 {session?.access_token ? (
                     <button 
-                        onClick={() => { handleLogout() }}
+                        onClick={() => { void handleLogout() }}
                         className="ctaBtn"
                         > Logout </button>
                 ):(
