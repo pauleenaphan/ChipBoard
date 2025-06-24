@@ -13,6 +13,11 @@ This project was created to practice the T3 stack and improve my web development
 - Supabase
 - React Icons
 
+## Screenshots
+![Screenshot 2025-06-23 201611](https://github.com/user-attachments/assets/82e4bd2d-aeae-4ec6-b5da-591af9827c87)
+![Screenshot 2025-06-23 201633](https://github.com/user-attachments/assets/d2835bdd-c56f-423f-82c9-fb3ccc4dff78)
+![Screenshot 2025-06-23 201645](https://github.com/user-attachments/assets/224e28db-be36-4454-9f94-6a048112661e)
+
 ## Future Features
 - Allowing users to browse a list of chips
 - Allowing users to browse other user's boards and reviews
